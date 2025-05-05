@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo/style.css">
+    <link rel="shortcut icon" href="imgs/favicon.ico" type="image/x-icon">
+    <title>Study Strategies</title>
+    <style>
+        body{
+            background: url(imgs/login_wallpaper.png) center no-repeat fixed;
+            background-size: cover;
+        }
+        main{
+            border-radius: 20px;
+            margin-top: 90px;
+            margin-bottom: 100px;
+        }
+        main a.entrar::after{
+        content: "\00A0";
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60vh;
+        }
+
+        .login-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 15px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-container label {
+            text-align: left;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .login-container input {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .login-container button {
+            margin-top: 15px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background: #0056b3;
+        }
+
+        .login-container p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .login-container a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+    </head>
+    <body>
+        <header>
+            <h1>Estrategias de estudo</h1>
+            <p>tudo é questão de constancia, você tambem consegue</p>
+       </header>
+       <nav>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li class="dropdown">
+                <a href="dicas.html">Dicas</a>
+
+                <div class="dropdown-menu">
+                    <a href="dicas.html" class="dropdown_baixo">Baixo</a>
+
+                    <a href="dicas_medio.html" class="dropdown_medio">Medio</a>
+                    
+                    <a href="dicas_alto.html" class="dropdown_alto">Alto</a>
+                </div>
+            </li>
+            <li>
+                <a href="estrategias.html">Estrategias</a>
+            </li>
+            <li>
+                <a href="feedback.html">Feedback</a>
+            </li>
+            <li>
+                <a href="contato.html">Contatos</a>
+            </li>
+        </ul>
+        </nav>
+
+       <main>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form>
+                <label>E-mail:</label>
+                <input placeholder="Digite seu e-mail">
+                
+                <label >Senha:</label>
+                <input placeholder="Digite sua senha">
+                
+                <button type="button" onclick="location.href='estrategias.html'">Entrar</button>
+            </form>
+            <p style="text-indent: 0px;"><a href="#">Esqueceu a senha?</a><br><a href="#">Criar conta</a></p> 
+            
+        </div>
+       </main>
+    
+        <footer>
+        <p>site criado por <a href="https://github.com/Luidy-Costa/" target="_blank" rel="external">Luidy Costa</a> para <a href="https://ifce.edu.br/home">IFCE</a></p>
+        </footer>
+
+    </body>
+</html>

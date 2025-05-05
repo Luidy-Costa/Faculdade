@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Tela de Apresentação -->
+        <div id="welcome-screen" class="screen active">
+            <h2>Bem-vindo ao Sistema Bancário</h2>
+            <p>Um sistema completo para gerenciamento de contas correntes e poupança.</p>
+            <button onclick="showScreen('login-screen')">Acessar Sistema</button>
+        </div>
+        
+        <!-- Tela de Login -->
+        <div id="login-screen" class="screen">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Usuário" required>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <div id="login-error" class="error"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

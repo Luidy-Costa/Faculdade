@@ -1,0 +1,23 @@
+body{
+    background-color: rgb(200, 200, 200);
+}
+td, th{
+    border: 1px solid black;
+}
+th{
+    background: gray;
+}
+table{
+    background: white;
+    border-collapse: collapse;
+    max-width: 600px;
+    margin: auto;
+    width: 100%;
+
+}
+.num {
+    text-align: right;
+}
+tfoot{
+    background: gray;
+}

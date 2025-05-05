@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Consultar Conta</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Consultar Conta -->
+        <div id="consult-account-screen" class="screen active">
+            <h2>Consultar Conta</h2>
+            <form id="consult-account-form">
+                <input type="number" id="consult-account-number" placeholder="Número da Conta" required>
+                <button type="submit">Consultar</button>
+            </form>
+            <div id="consult-account-result"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

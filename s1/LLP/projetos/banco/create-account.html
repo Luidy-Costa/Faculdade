@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Criar Conta</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Criar Conta -->
+        <div id="create-account-screen" class="screen active">
+            <h2>Criar Nova Conta</h2>
+            <form id="create-account-form">
+                <select id="account-type" required>
+                    <option value="">Selecione o tipo de conta</option>
+                    <option value="CORRENTE">Conta Corrente</option>
+                    <option value="POUPANCA">Conta Poupança</option>
+                </select>
+                <input type="text" id="account-agency" placeholder="Agência" required>
+                <input type="text" id="account-holder-name" placeholder="Nome do Titular" required>
+                <input type="text" id="account-holder-cpf" placeholder="CPF do Titular" required>
+                <input type="text" id="account-holder-address" placeholder="Endereço do Titular" required>
+                <input type="text" id="account-holder-phone" placeholder="Telefone do Titular" required>
+                <input type="number" id="initial-balance" placeholder="Saldo Inicial" min="0" step="0.01">
+                <button type="submit">Criar Conta</button>
+            </form>
+            <div id="create-account-message" class="success"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

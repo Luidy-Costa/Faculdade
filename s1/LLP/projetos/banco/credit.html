@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Creditar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Creditar -->
+        <div id="credit-screen" class="screen active">
+            <h2>Creditar em Conta</h2>
+            <form id="credit-form">
+                <input type="number" id="credit-account-number" placeholder="Número da Conta" required>
+                <input type="number" id="credit-amount" placeholder="Valor" min="0.01" step="0.01" required>
+                <button type="submit">Creditar</button>
+            </form>
+            <div id="credit-message"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

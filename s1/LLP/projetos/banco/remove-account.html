@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Remover Conta</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Remover Conta -->
+        <div id="remove-account-screen" class="screen active">
+            <h2>Remover Conta</h2>
+            <form id="remove-account-form">
+                <input type="number" id="remove-account-number" placeholder="Número da Conta" required>
+                <button type="submit">Remover</button>
+            </form>
+            <div id="remove-account-message"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

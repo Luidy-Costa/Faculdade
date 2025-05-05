@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Render Juros</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Render Juros -->
+        <div id="interest-screen" class="screen active">
+            <h2>Render Juros</h2>
+            <form id="interest-form">
+                <input type="number" id="interest-account-number" placeholder="Número da Conta Poupança" required>
+                <input type="number" id="interest-rate" placeholder="Taxa de Juros (%)" min="0.01" step="0.01" required>
+                <button type="submit">Aplicar Juros</button>
+            </form>
+            <div id="interest-message"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

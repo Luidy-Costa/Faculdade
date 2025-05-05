@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" href="estilo/style.css">
+    <link rel="shortcut icon" href="imgs/favicon.ico" type="image/x-icon">
+    <title>Study Strategies</title>
+    <style>
+    html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Faz o main ocupar o espaço restante na altura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Garante que o main ocupe toda a largura disponível */
+    max-width: 800px; /* Ajuste conforme o design desejado */
+    margin: 0 auto; /* Centraliza horizontalmente */ }
+    
+    #comentarios {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 10px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    #form-comentario {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #form-comentario input,
+    #form-comentario textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    #form-comentario button {
+        background: var(--cor5);
+        color: white;
+        border: none;
+        padding: 8px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    #form-comentario button:hover {
+        background: var(--cor4);
+    }
+    
+    .comentario {
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .comentario button {
+        float: right;
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    .comentario button:hover {
+        background: darkred;
+    }
+    </style>
+    </head>
+    <body>
+        <header>
+            <h1>Estrategias de estudo</h1>
+            <p>tudo é questão de constancia, você tambem consegue</p>
+       </header>
+       <nav>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li class="dropdown">
+                <a href="dicas.html">Dicas</a>
+
+                <div class="dropdown-menu">
+                    <a href="dicas.html" class="dropdown_baixo">Baixo</a>
+
+                    <a href="dicas_medio.html" class="dropdown_medio">Medio</a>
+                    
+                    <a href="dicas_alto.html" class="dropdown_alto">Alto</a>
+                </div>
+            </li>
+            <li>
+                <a href="estrategias.html">Estrategias</a>
+            </li>
+            <li>
+                <a href="feedback.html">Feedback</a>
+            </li>
+            <li>
+                <a href="contato.html">Contatos</a>
+            </li>
+        </ul>
+        </nav>
+
+        <main>
+            
+                <section id="comentarios">
+                    <h2>Comentários</h2>
+                    <form id="form-comentario">
+                        <input type="text" id="nome" placeholder="Seu nome" required>
+                        <textarea id="mensagem" placeholder="Escreva um comentário..." required></textarea>
+                        <button type="submit">Comentar</button>
+                    </form>
+                    <div id="lista-comentarios"></div>
+                </section>
+                
+        </main>
+    
+        <footer>
+        <p>site criado por <a href="https://github.com/Luidy-Costa/" target="_blank" rel="external">Luidy Costa</a> para <a href="https://ifce.edu.br/home">IFCE</a></p>
+        </footer>
+
+        <script src="feedback.js"></script>
+        
+            
+    </body>
+</html>

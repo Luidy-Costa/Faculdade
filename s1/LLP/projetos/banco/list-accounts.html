@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Listar Contas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Listar Contas -->
+        <div id="list-accounts-screen" class="screen active">
+            <h2>Lista de Contas</h2>
+            <div id="accounts-list"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Carrega a lista de contas quando a página é aberta
+        window.onload = function() {
+            listAccounts();
+        };
+    </script>
+</body>
+</html>

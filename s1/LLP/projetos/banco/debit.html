@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Debitar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Debitar -->
+        <div id="debit-screen" class="screen active">
+            <h2>Debitar de Conta</h2>
+            <form id="debit-form">
+                <input type="number" id="debit-account-number" placeholder="Número da Conta" required>
+                <input type="number" id="debit-amount" placeholder="Valor" min="0.01" step="0.01" required>
+                <button type="submit">Debitar</button>
+            </form>
+            <div id="debit-message"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

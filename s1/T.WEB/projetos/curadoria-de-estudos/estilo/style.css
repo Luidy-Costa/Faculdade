@@ -1,0 +1,342 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Finlandica:ital,wght@0,400..700;1,400..700&family=Passion+One:wght@400;700;900&family=Sriracha&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root{
+    --cor1:#ebffff;
+    --cor2:#8ed0dc;
+    --cor3:#78bbd1;
+    --cor4:#65adcf;
+    --cor5:#4992c0;
+
+    --fonte-titulo:"Passion One", sans-serif;
+    --fonte-especial:"Red Hat Display", sans-serif;
+    --fonte-padrao:"Arial","Verdana","Helvetica";
+
+    --baixo:lightgreen;
+    --medio:rgb(255, 214, 139);
+    --alto:rgb(246, 101, 101);
+}
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+
+}
+html{ 
+    background-color: var(--cor1);
+}
+body,html{
+    height: 100vh;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* exclusivo da home, pagina inicial */
+header.home{
+    text-align: center;
+    padding: 30px;
+    font-family: var(--fonte-titulo);
+    background-image: linear-gradient(to bottom, var(--cor3), var(--cor5));
+}
+header.home h1 {
+    font-variant: small-caps;
+    font-size: 3rem;
+}
+header.home p {
+    font-size:1.2rem;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+nav.home{
+    background-color: var(--cor5);
+    background-image: none;
+    padding: 10px;
+
+}
+
+nav.home a{
+    text-decoration: none;
+    color: white;
+    margin: 5px;
+    padding: 4px;
+    border-radius: 7px;
+}
+
+nav.home a:hover{
+    color: black;
+    background-color: var(--cor4);
+    transition-duration: 0.7s;
+}
+
+.home.dropdown:hover .dropdown-menu{
+    display: block;
+    
+
+}
+
+.home.dropdown-menu{
+    
+    background-color: var(--cor5);
+    border-radius:0px 0px 10px 10px;
+    margin-top: 5px;
+    position: absolute;
+    box-shadow: 5px 5px 3px -3px  rgba(0, 0, 0, 0.362);
+    display: none;
+}
+.home.dropdown-menu a {
+    display: block;
+    margin: 3px 0px;
+    
+}
+nav.home a.dropdown_baixo:hover{
+    background-color:var(--baixo); 
+}
+nav.home a.dropdown_medio:hover{
+    background-color:var(--medio); 
+}
+nav.home a.dropdown_alto:hover{
+    background-color:var(--alto); 
+}
+
+main.home{
+    /* margin-bottom: 196px; */
+    margin-bottom: 106px;
+}
+
+main.home p{
+    margin: 0px;
+}
+/* exclusivo da home, pagina inicial */
+
+
+
+
+
+
+
+
+
+/*--------------------- configurando o HEADER---------------- */
+header{
+    text-align: center;
+    padding: 6px;
+    font-family: var(--fonte-titulo);
+    background-image: linear-gradient(to bottom, var(--cor3), var(--cor4));
+}
+header h1 {
+    font-variant: small-caps;
+    font-size: 2rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.256);
+}
+header p {
+    font-size:1rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.278);
+}
+
+nav{
+    background-image:linear-gradient(to bottom,var(--cor4),var(--cor5) );
+    padding: 5px;
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.249);
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a{
+    text-decoration: none;
+    color: white;
+    margin: 5px;
+    padding: 4px;
+    border-radius: 7px;
+}
+
+nav a:hover{
+    color: black;
+    background-color: var(--cor4);
+    transition-duration: 0.7s;
+}
+
+.dropdown:hover .dropdown-menu{
+    display: block;
+    
+
+}
+
+.dropdown-menu{
+    padding: 3px;
+    background-color: var(--cor5);
+    border-radius:0px 0px 10px 10px;
+    margin-top: 3px;
+    position: absolute;
+    box-shadow: 3px 3px 3px -2px rgba(0, 0, 0, 0.362);
+    display: none;
+}
+.dropdown-menu a {
+    display: block;
+    margin: 3px 1px;
+    
+}
+nav a.dropdown_baixo:hover{
+    background-color:var(--baixo); 
+}
+nav a.dropdown_medio:hover{
+    background-color:var(--medio); 
+}
+nav a.dropdown_alto:hover{
+    background-color:var(--alto); 
+}
+/*--------------------- configurando o HEADER---------------- */
+
+
+/*--------------------- configurando o MAIN---------------- */
+
+
+
+main{
+    background-color: white;
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 60px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 15px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.262);
+}
+
+
+
+main p{
+    line-height: 1.5em;
+    padding: 10px;
+    text-indent: 20px;
+    text-align: justify;
+    margin:20px 0px 30px 0px;
+}
+
+main a{
+    text-decoration: none;
+    color: var(--cor5);
+    background-color: var(--cor1);
+    padding: 2px 5px;
+    font-weight: bold;
+}
+
+main a:hover{
+    text-decoration: underline;
+    color: var(--cor3);
+}
+
+main a::after{
+    content: "\00A0\1F517";
+}
+
+aside{
+    margin: 20px 0px 40px 0px;
+    background-color: var(--cor1);
+
+    border-radius: 20px;
+}
+
+main h1{
+    text-align: center;
+    background-image: radial-gradient( var(--cor2), white 65%);
+    font-family: var(--fonte-especial);
+    font-weight: 900;
+    font-size: 1.8rem;
+    margin: 10px 0pc 30px 0px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.295);
+}
+main h2{
+    background-image: linear-gradient(to right, var(--cor2), white 90%);
+    border-radius: 2px;
+    text-indent: 5px;
+    font-family: var(--fonte-especial);
+    font-weight: 800;
+}
+main h3{
+    background-image: linear-gradient(to right, var(--cor2), white 90%);
+    border-radius: 2px;
+    text-indent: 5px;
+    font-family: var(--fonte-especial);
+    font-weight: 800;
+    margin: 1rem;
+}
+
+aside strong{
+    padding: 2px 4px;
+}
+
+.baixo{
+    background-image: linear-gradient(to right, var(--baixo) , white);
+}
+.medio{
+    background-image: linear-gradient(to right, var(--medio) , white);
+}
+.alto{
+    background-image: linear-gradient(to right, var(--alto) , white);
+}
+
+
+#baixo{
+    background-image: linear-gradient(to right,var(--baixo) 80%, white);
+}
+#medio{
+    background-image: linear-gradient(to right, var(--medio) 80%, white);
+}
+#alto{
+    background-image: linear-gradient(to right, var(--alto) 80%, white);
+}
+
+img.contato{
+    max-width: 300px;
+    max-height: 300px;
+}
+
+div.contato{
+    display:flex;
+    align-items: row;
+}
+
+ul.contato{
+    display: block;
+    margin: 10px 0px;
+    padding: 5px 20px;
+}
+/*--------------------- configurando o MAIN---------------- */
+
+
+
+/*--------------------- configurando o FOOTER---------------- */
+footer{
+    background-color: var(--cor5);
+    padding: 5px;
+    text-align: center;
+    color: white;
+    margin-top: 4.2rem;
+}
+
+footer a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+footer a:hover{
+    color: rgb(75, 74, 74);
+    text-decoration: underline;
+    transition-duration: .2s;
+}
+/*--------------------- configurando o FOOTER---------------- */

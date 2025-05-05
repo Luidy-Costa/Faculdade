@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercícios com Funções e Vetores</title>
+</head>
+<body>
+  <h1>Atividades com Funções e Vetores</h1>
+
+  <button onclick="saudacao()">1. Saudação</button>
+  <button onclick="soma()">2. Soma</button>
+  <button onclick="parOuImpar()">3. Par ou Ímpar</button>
+  <button onclick="fatorial()">4. Fatorial</button>
+  <button onclick="media()">5. Média</button>
+  <button onclick="calculadora()">6. Calculadora</button>
+  <button onclick="tabuada()">7. Tabuada</button>
+  <button onclick="contagemRegressiva()">8. Contagem Regressiva</button>
+  <button onclick="filtrarPares()">9. Filtrar Pares</button>
+  <button onclick="produtoMaisBarato()">10. Produto Mais Barato</button>
+
+  <script>
+    function saudacao() {
+      let nome = prompt("Digite seu nome:");
+      alert("Olá, " + nome + "! Seja bem-vindo!");
+    }
+
+    function soma() {
+      let a = Number(prompt("Digite o primeiro número:"));
+      let b = Number(prompt("Digite o segundo número:"));
+      alert("Soma: " + (a + b));
+    }
+
+    function parOuImpar() {
+      let n = Number(prompt("Digite um número:"));
+      alert(n % 2 === 0 ? "Par" : "Ímpar");
+    }
+
+    function fatorial() {
+      let n = Number(prompt("Digite um número inteiro positivo:"));
+      let f = 1;
+      for (let i = 2; i <= n; i++) {
+        f *= i;
+      }
+      alert("Fatorial: " + f);
+    }
+
+    function media() {
+      let notas = [];
+      for (let i = 0; i < 3; i++) {
+        notas[i] = Number(prompt("Digite a nota " + (i + 1) + ":"));
+      }
+      let soma = notas[0] + notas[1] + notas[2];
+      alert("Média: " + (soma / 3).toFixed(2));
+    }
+
+    function calculadora() {
+      let a = Number(prompt("Digite o primeiro número:"));
+      let b = Number(prompt("Digite o segundo número:"));
+      let op = prompt("Digite o operador (+, -, *, /):");
+      let resultado = 0;
+      if (op === "+") resultado = a + b;
+      else if (op === "-") resultado = a - b;
+      else if (op === "*") resultado = a * b;
+      else if (op === "/") resultado = a / b;
+      alert("Resultado: " + resultado);
+    }
+
+    function tabuada() {
+      let n = Number(prompt("Digite um número para ver a tabuada:"));
+      let res = "";
+      for (let i = 0; i <= 10; i++) {
+        res += n + " x " + i + " = " + (n * i) + "\n";
+      }
+      alert(res);
+    }
+
+    function contagemRegressiva() {
+      let n = Number(prompt("Digite o número inicial da contagem regressiva:"));
+      let vetor = [];
+      for (let i = n; i >= 0; i--) {
+        vetor.push(i);
+      }
+      alert("Contagem: " + vetor.join(", "));
+    }
+
+    function filtrarPares() {
+      let numeros = [1,2,3,4,5,6,7,8,9,10];
+      let pares = [];
+      for (let i = 0; i < numeros.length; i++) {
+        if (numeros[i] % 2 === 0) {
+          pares.push(numeros[i]);
+        }
+      }
+      alert("Números pares: " + pares.join(", "));
+    }
+
+    function produtoMaisBarato() {
+      let nomes = ["Caneta", "Lápis", "Caderno", "Borracha"];
+      let precos = [2.5, 1.2, 10.0, 0.99];
+      let menorPreco = precos[0];
+      let posicao = 0;
+
+      for (let i = 1; i < precos.length; i++) {
+        if (precos[i] < menorPreco) {
+          menorPreco = precos[i];
+          posicao = i;
+        }
+      }
+
+      alert("Produto mais barato: " + nomes[posicao]);
+    }
+  </script>
+</body>
+</html>

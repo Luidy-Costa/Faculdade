@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancário - Transferência</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Bancário</h1>
+    </header>
+    
+    <div class="container">
+        <!-- Transferência -->
+        <div id="transfer-screen" class="screen active">
+            <h2>Transferência entre Contas</h2>
+            <form id="transfer-form">
+                <input type="number" id="transfer-from" placeholder="Conta de Débito" required>
+                <input type="number" id="transfer-to" placeholder="Conta de Crédito" required>
+                <input type="number" id="transfer-amount" placeholder="Valor" min="0.01" step="0.01" required>
+                <button type="submit">Transferir</button>
+            </form>
+            <div id="transfer-message"></div>
+            <button onclick="location.href='main-menu.html'">Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
