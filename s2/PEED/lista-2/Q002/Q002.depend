@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1747240143 source:c:\users\lluid\desktop\facul\faculdade\s2\peed\lista-1\q002\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<string.h>
+
