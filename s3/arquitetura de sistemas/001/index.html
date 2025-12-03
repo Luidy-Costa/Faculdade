@@ -141,7 +141,7 @@
                     </div>
                     <div class="card" style="text-align: center;">
                         <h4>Caixa (Mês)</h4>
-                        <h1 id="dash-caixa" style="color: var(--success-color);">€ 0</h1>
+                        <h1 id="dash-caixa" style="color: var(--success-color);">R$ 0</h1>
                     </div>
                 </div>
             </div>
@@ -237,7 +237,7 @@
                             <input type="text" id="fin-desc" placeholder="Ex: Restauração dente 12">
                         </div>
                         <div>
-                            <label>Valor (€):</label>
+                            <label>Valor (R$):</label>
                             <input type="number" id="fin-valor" step="0.01">
                         </div>
                         <div>
@@ -266,7 +266,7 @@
 
                 <div class="card" style="background: #e8f5e9;">
                     <h3>Fluxo de Caixa</h3>
-                    <h1 id="fin-total-display" style="color: var(--success-color);">€ 0,00</h1>
+                    <h1 id="fin-total-display" style="color: var(--success-color);">R$ 0,00</h1>
                     <small>Total de recebimentos efetivados (Pago)</small>
                 </div>
 
@@ -525,13 +525,13 @@
                             <td>${dataPt}</td>
                             <td>${f.desc}</td>
                             <td>${f.forma}</td>
-                            <td>€ ${parseFloat(f.valor).toFixed(2)}</td>
+                            <td>R$ ${parseFloat(f.valor).toFixed(2)}</td>
                             <td><span class="badge ${classBadge}">${f.status}</span></td>
                         </tr>
                     `;
                 });
                 
-                document.getElementById('fin-total-display').innerText = `€ ${totalCaixa.toFixed(2)}`;
+                document.getElementById('fin-total-display').innerText = `R$ ${totalCaixa.toFixed(2)}`;
             },
 
             updateDashboard() {
@@ -543,7 +543,7 @@
 
                 document.getElementById('dash-pacientes').innerText = pac;
                 document.getElementById('dash-hoje').innerText = consultas;
-                document.getElementById('dash-caixa').innerText = `€ ${total.toFixed(2)}`;
+                document.getElementById('dash-caixa').innerText = `R$ ${total.toFixed(2)}`;
             }
         };
 
