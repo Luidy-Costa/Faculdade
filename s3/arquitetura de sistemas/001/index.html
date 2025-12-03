@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OdontoSys Lite v3</title>
+    <style>
+        /* --- CSS (Estilo) --- */
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Ecrã de Login */
+        #tela-login {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+            display: flex; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .login-card {
+            background: white; padding: 2.5rem; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); width: 100%; max-width: 350px; text-align: center;
+        }
+        .login-card input { width: 100%; margin-bottom: 1rem; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;}
+
+        /* App Principal */
+        #app-principal { display: none; flex: 1; flex-direction: column; }
+
+        header {
+            background-color: var(--primary-color); color: white; padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .nav-links button {
+            background: none; border: none; color: rgba(255,255,255,0.8);
+            font-size: 1rem; cursor: pointer; margin-left: 15px; transition: color 0.3s;
+        }
+        .nav-links button:hover, .nav-links button.active { color: white; font-weight: bold; text-decoration: underline; }
+        .btn-logout { background-color: rgba(255,255,255,0.2) !important; padding: 5px 10px; border-radius: 4px; }
+
+        main { padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+
+        /* Componentes */
+        .section { display: none; animation: fadeIn 0.3s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .form-grid.three-cols { grid-template-columns: 1fr 1fr 1fr; }
+        .full-width { grid-column: span 2; }
+        .full-width-3 { grid-column: span 3; }
+
+        label { display: block; margin-bottom: 0.3rem; font-weight: 600; font-size: 0.9rem; }
+        input, select, textarea { width: 100%; padding: 0.6rem; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; }
+        
+        /* Botões */
+        .btn { padding: 0.6rem 1.2rem; border: none; border-radius: 4px; cursor: pointer; color: white; font-weight: 500; transition: 0.2s; }
+        .btn-primary { background-color: var(--primary-color); }
+        .btn-success { background-color: var(--success-color); }
+        .btn-danger { background-color: var(--danger-color); }
+        .btn-warning { background-color: var(--warning-color); color: #333; }
+        .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.85rem; margin-right: 5px; }
+
+        /* Tabelas e Crachás */
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th { background-color: #e9ecef; text-align: left; padding: 0.8rem; }
+        td { padding: 0.8rem; border-bottom: 1px solid #dee2e6; }
+        
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; color: white; }
+        .bg-pago { background-color: var(--success-color); }
+        .bg-pendente { background-color: var(--warning-color); color: #333; }
+        .bg-cancelado { background-color: var(--secondary-color); }
+        
+        /* Notificações (Toast) */
+        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 4px; padding: 16px; position: fixed; z-index: 3000; left: 50%; bottom: 30px; transform: translateX(-50%); }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+    <!-- 1. ECRÃ DE LOGIN -->
+    <div id="tela-login">
+        <div class="login-card">
+            <h2>🦷 OdontoSys v3</h2>
+            <p>Acesso ao Sistema</p>
+            <input type="text" id="login-user" placeholder="Utilizador">
+            <input type="password" id="login-pass" placeholder="Senha">
+            <button class="btn btn-primary" style="width: 100%;" onclick="App.login()">Entrar</button>
+            <div style="margin-top:15px; font-size:12px; color:#666; text-align: left;">
+                <p><b>Dentistas:</b> user1, user2, user3 (senha: 123)</p>
+                <p><b>Secretária:</b> sec (senha: 123)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. APP PRINCIPAL -->
+    <div id="app-principal">
+        <header>
+            <div style="font-weight: bold; font-size: 1.2rem;">🦷 OdontoSys Lite</div>
+            <div class="nav-links">
+                <!-- ADICIONADOS IDs PARA CONTROLO DE MENU -->
+                <button id="nav-dashboard" onclick="App.navegar('dashboard')" class="active">🏠 Início</button>
+                <button id="nav-pacientes" onclick="App.navegar('pacientes')">👥 Pacientes</button>
+                <button id="nav-agenda" onclick="App.navegar('agenda')">📅 Agenda</button>
+                <button id="nav-financeiro" onclick="App.navegar('financeiro')">💰 Financeiro</button>
+                <button onclick="App.logout()" class="btn-logout">Sair</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- DASHBOARD -->
+            <div id="view-dashboard" class="section active">
+                <h3 id="welcome-msg">Bem-vindo</h3>
+                <div class="form-grid three-cols">
+                    <div class="card" style="text-align: center;">
+                        <h4>Pacientes</h4>
+                        <h1 id="dash-pacientes" style="color: var(--primary-color);">0</h1>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4>Hoje</h4>
+                        <h1 id="dash-hoje" style="color: var(--info-color);">0</h1>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4>Caixa (Mês)</h4>
+                        <h1 id="dash-caixa" style="color: var(--success-color);">€ 0</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PACIENTES (COM EDIÇÃO) -->
+            <div id="view-pacientes" class="section">
+                <div class="card">
+                    <h3 id="titulo-form-paciente">Novo Paciente</h3>
+                    <!-- Campo Oculto para controlar ID na Edição -->
+                    <input type="hidden" id="pac-id" value="">
+                    
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <label>Nome Completo:</label>
+                            <input type="text" id="pac-nome">
+                        </div>
+                        <div>
+                            <label>CPF:</label>
+                            <input type="text" id="pac-cpf" placeholder="000.000.000-00">
+                        </div>
+                        <div>
+                            <label>Telefone:</label>
+                            <input type="text" id="pac-tel" placeholder="(00) 00000-0000">
+                        </div>
+                        <div class="full-width">
+                            <label>Histórico Clínico / Evolução:</label>
+                            <textarea id="pac-historico" placeholder="Anote aqui alergias, tratamentos realizados..."></textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-success" id="btn-salvar-pac" onclick="Controller.salvarPaciente()">Registar</button>
+                        <button class="btn btn-danger" id="btn-cancelar-pac" onclick="View.resetFormPaciente()" style="display: none;">Cancelar Edição</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Pacientes Registados</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Telefone</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-pacientes"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- AGENDA -->
+            <div id="view-agenda" class="section">
+                <div class="card">
+                    <h3>Agendar Consulta</h3>
+                    <div class="form-grid three-cols">
+                        <div class="full-width-3">
+                            <label>Paciente:</label>
+                            <select id="ag-paciente-select"><option value="">A carregar...</option></select>
+                        </div>
+                        <div class="full-width-3">
+                            <label>Dentista Responsável:</label>
+                            <select id="ag-dentista-select">
+                                <option value="">Selecione o dentista...</option>
+                                <option value="Dr. Ricardo (user1)">Dr. Ricardo</option>
+                                <option value="Dra. Ana (user2)">Dra. Ana</option>
+                                <option value="Dr. Carlos (user3)">Dr. Carlos</option>
+                            </select>
+                        </div>
+                        <div><label>Data:</label><input type="date" id="ag-data"></div>
+                        <div><label>Hora:</label><input type="time" id="ag-hora"></div>
+                        <div style="display: flex; align-items: end;">
+                            <button class="btn btn-primary" style="width: 100%;" onclick="Controller.agendar()">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Próximas Consultas</h3>
+                    <table>
+                        <thead><tr><th>Data</th><th>Hora</th><th>Paciente</th><th>Dentista</th><th>Estado</th><th>Ação</th></tr></thead>
+                        <tbody id="lista-agenda"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- FINANCEIRO (COMPLETO) -->
+            <div id="view-financeiro" class="section">
+                <div class="card">
+                    <h3>Lançamento Financeiro</h3>
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <label>Descrição do Procedimento:</label>
+                            <input type="text" id="fin-desc" placeholder="Ex: Restauração dente 12">
+                        </div>
+                        <div>
+                            <label>Valor (€):</label>
+                            <input type="number" id="fin-valor" step="0.01">
+                        </div>
+                        <div>
+                            <label>Data:</label>
+                            <input type="date" id="fin-data">
+                        </div>
+                        <div>
+                            <label>Forma de Pagamento:</label>
+                            <select id="fin-forma">
+                                <option value="Dinheiro">Dinheiro</option>
+                                <option value="Cartão Crédito">Cartão Crédito</option>
+                                <option value="Cartão Débito">Cartão Débito</option>
+                                <option value="Pix">Pix</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Estado:</label>
+                            <select id="fin-status">
+                                <option value="Pago">Pago (Recebido)</option>
+                                <option value="Pendente">Pendente (A Receber)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="Controller.lancarFinanceiro()">Registar Lançamento</button>
+                </div>
+
+                <div class="card" style="background: #e8f5e9;">
+                    <h3>Fluxo de Caixa</h3>
+                    <h1 id="fin-total-display" style="color: var(--success-color);">€ 0,00</h1>
+                    <small>Total de recebimentos efetivados (Pago)</small>
+                </div>
+
+                <div class="card">
+                    <h3>Histórico</h3>
+                    <table>
+                        <thead><tr><th>Data</th><th>Descrição</th><th>Forma</th><th>Valor</th><th>Estado</th></tr></thead>
+                        <tbody id="lista-financeiro"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast">Notificação</div>
+
+    <script>
+        /* --- 1. MODEL (Dados) --- */
+        const DB = {
+            get(key) { return JSON.parse(localStorage.getItem(key)) || []; },
+            set(key, data) { localStorage.setItem(key, JSON.stringify(data)); },
+            
+            add(key, item) {
+                const list = this.get(key);
+                list.push(item);
+                this.set(key, list);
+            },
+            
+            update(key, index, item) {
+                const list = this.get(key);
+                list[index] = item;
+                this.set(key, list);
+            },
+            
+            remove(key, index) {
+                const list = this.get(key);
+                list.splice(index, 1);
+                this.set(key, list);
+            }
+        };
+
+        /* --- 2. CONTROLLER (Lógica) --- */
+        const Controller = {
+            userProfile: null, // objeto { nome, tipo }
+
+            // PACIENTES
+            salvarPaciente() {
+                const id = document.getElementById('pac-id').value; 
+                const nome = document.getElementById('pac-nome').value;
+                const cpf = document.getElementById('pac-cpf').value;
+                const tel = document.getElementById('pac-tel').value;
+                const hist = document.getElementById('pac-historico').value;
+
+                if (!nome || !cpf) { App.notify("Nome e CPF obrigatórios!"); return; }
+
+                const paciente = { nome, cpf, tel, hist };
+
+                if (id === "") {
+                    DB.add('pacientes', paciente);
+                    App.notify("Paciente criado!");
+                } else {
+                    DB.update('pacientes', parseInt(id), paciente);
+                    App.notify("Paciente atualizado!");
+                }
+
+                View.resetFormPaciente();
+                View.renderPacientes();
+            },
+
+            prepararEdicaoPaciente(index) {
+                const list = DB.get('pacientes');
+                const p = list[index];
+                
+                document.getElementById('pac-id').value = index;
+                document.getElementById('pac-nome').value = p.nome;
+                document.getElementById('pac-cpf').value = p.cpf;
+                document.getElementById('pac-tel').value = p.tel;
+                document.getElementById('pac-historico').value = p.hist;
+
+                document.getElementById('titulo-form-paciente').innerText = "A editar: " + p.nome;
+                document.getElementById('btn-salvar-pac').innerText = "Guardar Alterações";
+                document.getElementById('btn-salvar-pac').className = "btn btn-warning";
+                document.getElementById('btn-cancelar-pac').style.display = "inline-block";
+                
+                window.scrollTo(0,0);
+            },
+
+            deletarPaciente(index) {
+                if(confirm("Excluir este paciente?")) {
+                    DB.remove('pacientes', index);
+                    View.renderPacientes();
+                }
+            },
+
+            // AGENDA
+            agendar() {
+                const idx = document.getElementById('ag-paciente-select').value;
+                const dentista = document.getElementById('ag-dentista-select').value;
+                const data = document.getElementById('ag-data').value;
+                const hora = document.getElementById('ag-hora').value;
+
+                if(idx === "" || !data || !hora || dentista === "") { App.notify("Preencha todos os dados!"); return; }
+
+                const pacientes = DB.get('pacientes');
+                const agendamento = { 
+                    nome: pacientes[idx].nome, 
+                    dentista: dentista, 
+                    data, hora, 
+                    status: 'Agendado' 
+                };
+                
+                DB.add('agenda', agendamento);
+                App.notify("Agendado com sucesso!");
+                View.renderAgenda();
+                View.updateDashboard();
+            },
+            
+            cancelarAgenda(index) {
+                if(confirm("Cancelar consulta?")) {
+                    DB.remove('agenda', index);
+                    View.renderAgenda();
+                }
+            },
+
+            // FINANCEIRO
+            lancarFinanceiro() {
+                const desc = document.getElementById('fin-desc').value;
+                const valor = parseFloat(document.getElementById('fin-valor').value);
+                const data = document.getElementById('fin-data').value;
+                const forma = document.getElementById('fin-forma').value;
+                const status = document.getElementById('fin-status').value;
+
+                if (!desc || isNaN(valor) || !data) { App.notify("Dados inválidos!"); return; }
+
+                const lancamento = { desc, valor, data, forma, status };
+                
+                DB.add('financeiro', lancamento);
+                App.notify("Lançamento registado!");
+                
+                document.getElementById('fin-desc').value = "";
+                document.getElementById('fin-valor').value = "";
+                View.renderFinanceiro();
+                View.updateDashboard();
+            }
+        };
+
+        /* --- 3. VIEW (Interface) --- */
+        const View = {
+            init() {
+                this.renderPacientes();
+                this.renderAgenda();
+                this.renderFinanceiro();
+                this.updateDashboard();
+                this.updateSelectPacientes();
+            },
+
+            navegar(tela) {
+                // Esconde todas as secções
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+                
+                // Mostra a secção alvo
+                document.getElementById(`view-${tela}`).classList.add('active');
+                
+                // Destaca o botão correspondente
+                const btnAtivo = document.getElementById(`nav-${tela}`);
+                if (btnAtivo) btnAtivo.classList.add('active');
+                
+                if(tela === 'agenda') this.updateSelectPacientes();
+            },
+
+            resetFormPaciente() {
+                document.getElementById('pac-id').value = "";
+                document.getElementById('pac-nome').value = "";
+                document.getElementById('pac-cpf').value = "";
+                document.getElementById('pac-tel').value = "";
+                document.getElementById('pac-historico').value = "";
+                
+                document.getElementById('titulo-form-paciente').innerText = "Novo Paciente";
+                document.getElementById('btn-salvar-pac').innerText = "Registar";
+                document.getElementById('btn-salvar-pac').className = "btn btn-success";
+                document.getElementById('btn-cancelar-pac').style.display = "none";
+            },
+
+            renderPacientes() {
+                const list = DB.get('pacientes');
+                const tbody = document.getElementById('lista-pacientes');
+                tbody.innerHTML = "";
+
+                list.forEach((p, i) => {
+                    const temPermissao = Controller.userProfile.tipo === 'admin';
+                    
+                    const histHtml = temPermissao
+                        ? `<small>${p.hist || '-'}</small>` 
+                        : `<span style="color:#999; font-style:italic;">Restrito</span>`;
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${p.nome}</td>
+                            <td>${p.cpf}</td>
+                            <td>${p.tel}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" onclick="Controller.prepararEdicaoPaciente(${i})">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="Controller.deletarPaciente(${i})">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            },
+
+            updateSelectPacientes() {
+                const list = DB.get('pacientes');
+                const sel = document.getElementById('ag-paciente-select');
+                sel.innerHTML = '<option value="">Selecione...</option>';
+                list.forEach((p, i) => sel.innerHTML += `<option value="${i}">${p.nome} (${p.cpf})</option>`);
+            },
+
+            renderAgenda() {
+                const list = DB.get('agenda').sort((a,b) => new Date(a.data + 'T' + a.hora) - new Date(b.data + 'T' + b.hora));
+                const tbody = document.getElementById('lista-agenda');
+                tbody.innerHTML = "";
+
+                list.forEach((a, i) => {
+                    const dataPt = a.data.split('-').reverse().join('/');
+                    
+                    const dentistaInfo = a.dentista ? `<br><small style="color:gray">${a.dentista}</small>` : '';
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${dataPt}</td>
+                            <td>${a.hora}</td>
+                            <td>${a.nome}${dentistaInfo}</td>
+                            <td><span class="badge bg-info" style="background:#0dcaf0">${a.status}</span></td>
+                            <td><button class="btn btn-danger btn-sm" onclick="Controller.cancelarAgenda(${i})">X</button></td>
+                        </tr>
+                    `;
+                });
+            },
+
+            renderFinanceiro() {
+                if(Controller.userProfile.tipo !== 'admin') return;
+
+                const list = DB.get('financeiro');
+                const tbody = document.getElementById('lista-financeiro');
+                let totalCaixa = 0;
+                tbody.innerHTML = "";
+
+                list.forEach(f => {
+                    if(f.status === 'Pago') totalCaixa += parseFloat(f.valor);
+
+                    const dataPt = f.data.split('-').reverse().join('/');
+                    const classBadge = f.status === 'Pago' ? 'bg-pago' : 'bg-pendente';
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${dataPt}</td>
+                            <td>${f.desc}</td>
+                            <td>${f.forma}</td>
+                            <td>€ ${parseFloat(f.valor).toFixed(2)}</td>
+                            <td><span class="badge ${classBadge}">${f.status}</span></td>
+                        </tr>
+                    `;
+                });
+                
+                document.getElementById('fin-total-display').innerText = `€ ${totalCaixa.toFixed(2)}`;
+            },
+
+            updateDashboard() {
+                const pac = DB.get('pacientes').length;
+                const listFin = DB.get('financeiro');
+                const total = listFin.filter(i => i.status === 'Pago').reduce((sum, i) => sum + i.valor, 0);
+                const hoje = new Date().toISOString().split('T')[0];
+                const consultas = DB.get('agenda').filter(a => a.data === hoje).length;
+
+                document.getElementById('dash-pacientes').innerText = pac;
+                document.getElementById('dash-hoje').innerText = consultas;
+                document.getElementById('dash-caixa').innerText = `€ ${total.toFixed(2)}`;
+            }
+        };
+
+        /* --- 4. APP INIT (Controle de Acesso) --- */
+        const App = {
+            login() {
+                const u = document.getElementById('login-user').value;
+                const p = document.getElementById('login-pass').value;
+                
+                // Simulando múltiplos utilizadores (Dentistas e Secretária)
+                const usuarios = {
+                    'user1': { nome: 'Dr. Ricardo', tipo: 'admin' },
+                    'user2': { nome: 'Dra. Ana', tipo: 'admin' },
+                    'user3': { nome: 'Dr. Carlos', tipo: 'admin' },
+                    'sec': { nome: 'Secretária', tipo: 'sec' }
+                };
+
+                if (usuarios[u] && p === '123') {
+                    Controller.userProfile = usuarios[u]; 
+                    
+                    document.getElementById('tela-login').style.display = 'none';
+                    document.getElementById('app-principal').style.display = 'flex';
+                    
+                    document.getElementById('user-display').innerText = `Olá, ${usuarios[u].nome}`;
+
+                    if(usuarios[u].tipo === 'sec') {
+                        document.getElementById('nav-financeiro').style.display = 'none';
+                    }
+
+                    View.init();
+                } else {
+                    this.notify("Login inválido!");
+                }
+            },
+            logout() { location.reload(); },
+            // Correção: Navegar agora chama o View.navegar corretamente
+            navegar(tela) {
+                View.navegar(tela);
+            },
+            notify(msg) {
+                const t = document.getElementById('toast');
+                t.innerText = msg; t.className = "show";
+                setTimeout(() => t.className = t.className.replace("show", ""), 3000);
+            }
+        };
+    </script>
+</body>
+</html>
