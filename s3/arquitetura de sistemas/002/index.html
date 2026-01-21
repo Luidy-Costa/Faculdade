@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OdontoSys Lite v3 - Arquitetura em Camadas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="tela-login">
+        <div class="login-card">
+            <h2>🦷 OdontoSys v3</h2>
+            <p>Acesso ao Sistema</p>
+            <input type="text" id="login-user" placeholder="Utilizador">
+            <input type="password" id="login-pass" placeholder="Senha">
+            <button class="btn btn-primary" style="width: 100%;" onclick="Controller.login()">Entrar</button>
+            <div style="margin-top:15px; font-size:12px; color:#666; text-align: left;">
+                <p><b>Dentistas:</b> user1, user2, user3 (senha: 123)</p>
+                <p><b>Secretária:</b> sec (senha: 123)</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="app-principal">
+        <header>
+            <div style="font-weight: bold; font-size: 1.2rem;">🦷 OdontoSys Lite</div>
+            <div class="nav-links">
+                <button id="nav-dashboard" onclick="Controller.navegar('dashboard')" class="active">🏠 Início</button>
+                <button id="nav-pacientes" onclick="Controller.navegar('pacientes')">👥 Pacientes</button>
+                <button id="nav-agenda" onclick="Controller.navegar('agenda')">📅 Agenda</button>
+                <button id="nav-financeiro" onclick="Controller.navegar('financeiro')">💰 Financeiro</button>
+                <button onclick="Controller.logout()" class="btn-logout">Sair</button>
+            </div>
+        </header>
+
+        <main>
+            <div id="view-dashboard" class="section active">
+                <h3 id="welcome-msg">Bem-vindo</h3>
+                <div class="form-grid three-cols">
+                    <div class="card" style="text-align: center;">
+                        <h4>Pacientes</h4>
+                        <h1 id="dash-pacientes" style="color: var(--primary-color);">0</h1>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4>Hoje</h4>
+                        <h1 id="dash-hoje" style="color: var(--info-color);">0</h1>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h4>Caixa (Mês)</h4>
+                        <h1 id="dash-caixa" style="color: var(--success-color);">R$ 0</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-pacientes" class="section">
+                <div class="card">
+                    <h3 id="titulo-form-paciente">Novo Paciente</h3>
+                    <input type="hidden" id="pac-id" value="">
+
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <label>Nome Completo:</label>
+                            <input type="text" id="pac-nome">
+                        </div>
+                        <div>
+                            <label>CPF:</label>
+                            <input type="text" id="pac-cpf" placeholder="000.000.000-00">
+                        </div>
+                        <div>
+                            <label>Telefone:</label>
+                            <input type="text" id="pac-tel" placeholder="(00) 00000-0000">
+                        </div>
+                        <div>
+                            <label>Data de Nascimento:</label>
+                            <input type="date" id="pac-nasc">
+                        </div>
+                        <div class="full-width">
+                            <label>Endereço Completo:</label>
+                            <input type="text" id="pac-endereco" placeholder="Rua, Número, Bairro...">
+                        </div>
+                        <div class="full-width">
+                            <label>Radiografias/Fotos (Link ou Base64):</label>
+                            <input type="text" id="pac-img"
+                                placeholder="Cole o link da imagem aqui (futuro: upload real)">
+                        </div>
+                        <div class="full-width">
+                            <label>Histórico Clínico / Evolução:</label>
+                            <textarea id="pac-historico"
+                                placeholder="Anote aqui alergias, tratamentos realizados..."></textarea>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-success" id="btn-salvar-pac"
+                            onclick="Controller.salvarPaciente()">Registar</button>
+                        <button class="btn btn-danger" id="btn-cancelar-pac"
+                            onclick="Controller.cancelarEdicaoPaciente()" style="display: none;">Cancelar
+                            Edição</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Pacientes Registados</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Telefone</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-pacientes"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="view-agenda" class="section">
+                <div class="card">
+                    <h3>Agendar Consulta</h3>
+                    <div class="form-grid three-cols">
+                        <div class="full-width-3">
+                            <label>Paciente:</label>
+                            <select id="ag-paciente-select">
+                                <option value="">A carregar...</option>
+                            </select>
+                        </div>
+                        <div class="full-width-3">
+                            <label>Dentista Responsável:</label>
+                            <select id="ag-dentista-select">
+                                <option value="">Selecione o dentista...</option>
+                                <option value="Dr. Ricardo (user1)">Dr. Ricardo</option>
+                                <option value="Dra. Ana (user2)">Dra. Ana</option>
+                                <option value="Dr. Carlos (user3)">Dr. Carlos</option>
+                            </select>
+                        </div>
+                        <div><label>Data:</label><input type="date" id="ag-data"></div>
+                        <div><label>Hora:</label><input type="time" id="ag-hora"></div>
+                        <div style="display: flex; align-items: end;">
+                            <button class="btn btn-primary" style="width: 100%;"
+                                onclick="Controller.agendar()">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Próximas Consultas</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th>Paciente</th>
+                                <th>Dentista</th>
+                                <th>Estado</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-agenda"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="view-financeiro" class="section">
+                <div class="card">
+                    <h3>Lançamento Financeiro</h3>
+                    <div class="form-grid">
+                        <div class="full-width">
+                            <label>Descrição do Procedimento:</label>
+                            <input type="text" id="fin-desc" placeholder="Ex: Restauração dente 12">
+                        </div>
+                        <div>
+                            <label>Valor (R$):</label>
+                            <input type="number" id="fin-valor" step="0.01">
+                        </div>
+                        <div>
+                            <label>Data:</label>
+                            <input type="date" id="fin-data">
+                        </div>
+                        <div>
+                            <label>Forma de Pagamento:</label>
+                            <select id="fin-forma">
+                                <option value="Dinheiro">Dinheiro</option>
+                                <option value="Cartão Crédito">Cartão Crédito</option>
+                                <option value="Cartão Débito">Cartão Débito</option>
+                                <option value="Pix">Pix</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Estado:</label>
+                            <select id="fin-status">
+                                <option value="Pago">Pago (Recebido)</option>
+                                <option value="Pendente">Pendente (A Receber)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="Controller.lancarFinanceiro()">Registar Lançamento</button>
+                </div>
+
+                <div class="card" style="background: #e8f5e9;">
+                    <h3>Fluxo de Caixa</h3>
+                    <h1 id="fin-total-display" style="color: var(--success-color);">R$ 0,00</h1>
+                    <small>Total de recebimentos efetivados (Pago)</small>
+                </div>
+
+                <div class="card">
+                    <h3>Histórico</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Forma</th>
+                                <th>Valor</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-financeiro"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast">Notificação</div>
+
+    <script src="js/dao.js"></script>
+    <script src="js/service.js"></script>
+    <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+
+</body>
+
+</html>
